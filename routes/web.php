@@ -14,6 +14,9 @@ Route::get('/', function () {
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'action_login'])->name('login');
+
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/register', [AuthController::class, 'action_register'])->name('register');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -48,6 +51,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/mahasiswa/{mahasiswa}/update', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
 
     Route::get('/mahasiswa/{mahasiswa}/detail', [MahasiswaController::class, 'detail'])->name('mahasiswa.detail');
+
+    Route::get('/mahasiswa/verifikasi', [MahasiswaController::class, 'verifikasi'])->name('mahasiswa.verifikasi');
+    Route::patch('/mahasiswa/{mahasiswa}/verify', [MahasiswaController::class, 'status'])->name('mahasiswa.status');
 
     Route::get('/mahasiswa/{mahasiswa}/destroy', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
 

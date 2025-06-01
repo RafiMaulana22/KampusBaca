@@ -3,20 +3,26 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AccountVerifiedMail;
 use App\Models\Jurusan;
 use App\Models\Mahasiswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class MahasiswaController extends Controller
 {
     public function index()
     {
+        $mahasiswa = Mahasiswa::with('users', 'jurusans')->whereHas('users', function ($query) {
+            $query->where('status_akun', 'Aktif');
+        })->get();
+
         $data = [
             'title' => 'Mahasiswa',
-            'mahasiswa' => Mahasiswa::with('users', 'jurusans')->get(),
+            'mahasiswa' => $mahasiswa,
             'no' => 1,
         ];
 
@@ -221,6 +227,54 @@ class MahasiswaController extends Controller
         ];
 
         return view('admin.mahasiswa.detail', $data);
+    }
+
+    public function verifikasi()
+    {
+        $mahasiswa = Mahasiswa::with('users', 'jurusans')->whereHas('users', function ($query) {
+            $query->where('status_akun', 'Tidak Aktif');
+        })->get();
+
+        $data = [
+            'title' => 'Verifikasi Mahasiswa',
+            'mahasiswa' => $mahasiswa,
+            'no' => 1,
+        ];
+
+        return view('admin.mahasiswa.verifikasi', $data);
+    }
+
+    public function status($id)
+    {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $user = $mahasiswa->users;
+
+        if ($user) {
+            // Cek apakah akun belum aktif untuk menghindari pengiriman email berulang jika sudah aktif
+            if ($user->status_akun !== 'Aktif') {
+                $user->status_akun = 'Aktif'; // Set status menjadi Aktif
+                $user->save();
+
+                try {
+                    // Kirim email notifikasi
+                    Mail::to($user->email)->send(new AccountVerifiedMail($user));
+
+                    // Pesan sukses bisa mencakup info pengiriman email (opsional)
+                    // return redirect()->back()->with('success', 'Akun ' . $user->name . ' telah berhasil diverifikasi dan notifikasi email telah dikirim.');
+                } catch (\Exception $e) {
+                    // Jika pengiriman email gagal, log errornya tapi proses verifikasi tetap dianggap berhasil
+                    Log::error('Gagal mengirim email verifikasi akun untuk user ID ' . $user->id . ': ' . $e->getMessage());
+                    // Anda bisa menambahkan pesan berbeda jika email gagal terkirim
+                    return redirect()->back()->with('success_with_email_warning', 'Akun ' . $user->name . ' telah diverifikasi, namun email notifikasi gagal dikirim.');
+                }
+
+                return redirect()->back()->with('success', 'Akun ' . $user->name . ' telah berhasil diverifikasi.');
+            } else {
+                // Jika akun sudah aktif sebelumnya
+                return redirect()->back()->with('info', 'Akun ' . $user->name . ' sudah aktif sebelumnya.');
+            }
+        }
+        return redirect()->back()->with('error', 'Gagal memverifikasi akun. Pengguna tidak ditemukan.');
     }
 
     public function destroy($id)

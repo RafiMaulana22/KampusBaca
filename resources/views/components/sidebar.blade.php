@@ -50,11 +50,25 @@
                 Manajemen Pengguna
             </div>
             @if (Auth::user()->role == 'admin')
-                <a href="{{ route('mahasiswa.index') }}"
-                    class="sidebar-header {{ request()->is('mahasiswa*') ? 'active' : '' }}">
+                <a href="javascript:void(0)" class="sidebar-header {{ request()->is('mahasiswa*') ? 'active' : '' }}">
                     <i class="icon-notepad"></i>
-                    <span>Data Mahasiswa</span>
+                    <span>Mahasiswa</span>
+                    <i class="fa fa-angle-right pull-right"></i>
                 </a>
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('mahasiswa.index') }}" class="{{ request()->is('mahasiswa*') ? 'active' : '' }}">
+                            <i class="fa fa-angle-right"></i>
+                            Data Mahasiswa
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('mahasiswa.verifikasi') }}" class="{{ request()->is('mahasiswa/verifikasi*') ? 'active' : '' }}">
+                            <i class="fa fa-angle-right"></i>
+                            Validasi Mahasiswa
+                        </a>
+                    </li>
+                </ul>
             @endif
 
             <a href="javascript:void(0)" class="sidebar-header">
