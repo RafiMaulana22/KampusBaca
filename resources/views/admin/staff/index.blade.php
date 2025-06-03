@@ -17,12 +17,12 @@
         {{-- Alert untuk Catatan/Deskripsi Halaman --}}
         <div class="alert alert-info alert-dismissible fade show" role="alert">
             <strong class="me-1">Informasi:</strong>
-            Halaman ini menampilkan daftar {{ strtolower($title) }} yang tersimpan di sistem.
-            Anda dapat melihat detail atau melakukan verifikasi akun melalui menu aksi di setiap baris data.
+            Halaman ini menampilkan daftar {{ strtolower($title) }}.
+            Anda dapat menambahkan data baru menggunakan tombol "Tambah {{ $title }}" di atas,
+            atau mengelola data yang sudah ada melalui menu aksi di setiap baris tabel.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
-        {{-- Card untuk Menampilkan Data Mahasiswa --}}
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div>
@@ -31,9 +31,10 @@
                         Berikut adalah data {{ $title }} yang ada di KampusBaca
                     </small>
                 </div>
+                {{-- Tombol Tambah Staff --}}
+                <a href="{{ route('staff.create') }}" class="btn btn-primary btn-sm">Tambah {{ $title }}</a>
             </div>
             <div class="card-body">
-                {{-- Alert untuk Pesan Sukses --}}
                 @if (session('success'))
                     <div class="alert alert-success dark alert-dismissible fade show" role="alert">
                         <strong>Yeay !</strong>
@@ -43,36 +44,39 @@
                         </button>
                     </div>
                 @endif
+
                 <div class="table-responsive">
                     <table id="basic-1" class="display">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>NIM</th>
-                                <th>Nama Mahasiswa</th>
-                                <th>Fakultas</th>
-                                <th>Program Studi</th>
+                                <th>NIP</th>
+                                <th>Nama Lengkap</th>
+                                <th>Email</th>
+                                <th>Peran</th>
                                 <th>Status Akun</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                            @foreach ($mahasiswa as $item)
+                            {{-- Asumsi variabel $mahasiswa sekarang berisi data staff --}}
+                            @foreach ($staff as $item)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $item->nim }}</td>
+                                    <td>{{ $item->nip }}</td> {{-- Ganti dengan field NIP Anda --}}
                                     <td>{{ $item->users->name }}</td>
-                                    <td>{{ $item->jurusans->fakultas->nama_fakultas }}</td>
-                                    <td>{{ $item->jurusans->nama_jurusan }}</td>
+                                    <td>{{ $item->users->email }}</td>
                                     <td>
-                                        @if ($item->users->status_akun == 'Aktif')
+                                        {{-- Sesuaikan dengan cara Anda menyimpan/mengakses peran --}}
+                                        {{ $item->users->role }}
+                                    </td>
+                                    <td>
+                                        @if (isset($item->users) && $item->users->status_akun == 'Aktif')
                                             <span class="badge bg-success">Aktif</span>
-                                        @elseif ($item->users->status_akun == 'Tidak Aktif')
+                                        @elseif (isset($item->users) && $item->users->status_akun == 'Tidak Aktif')
                                             <span class="badge bg-danger">Tidak Aktif</span>
                                         @else
                                             <span class="badge bg-warning">{{ $item->users->status_akun }}</span>
-                                            {{-- Status lain --}}
                                         @endif
                                     </td>
                                     <td>
@@ -85,7 +89,16 @@
                                             <ul class="dropdown-menu" aria-labelledby="actionDropdown{{ $item->id }}">
                                                 <li>
                                                     <a class="dropdown-item"
-                                                        href="{{ route('mahasiswa.detail', ['mahasiswa' => $item->id]) }}">
+                                                        href="{{ route('staff.edit', ['staff' => $item->id]) }}">
+                                                        {{-- Route untuk edit staff --}}
+                                                        <i class="bi bi-pencil-square me-2"></i>
+                                                        Edit
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('staff.detail', ['staff' => $item->id]) }}">
+                                                        {{-- Route untuk detail staff --}}
                                                         <i class="bi bi-eye me-2"></i>
                                                         Detail
                                                     </a>
@@ -94,13 +107,13 @@
                                                     <hr class="dropdown-divider">
                                                 </li>
                                                 <li>
-                                                    {{-- Tombol Verifikasi Akun --}}
-                                                    <button type="button" class="dropdown-item text-success"
-                                                        {{-- Ubah warna teks --}} data-bs-toggle="modal"
-                                                        data-bs-target="#verifikasiMahasiswa{{ $item->id }}">
-                                                        {{-- Ubah target modal --}}
-                                                        <i class="bi bi-person-check-fill me-2"></i> {{-- Ubah ikon (contoh ikon verifikasi) --}}
-                                                        Verifikasi Akun {{-- Ubah teks --}}
+                                                    {{-- Tombol Hapus Akun --}}
+                                                    <button type="button" class="dropdown-item text-danger"
+                                                        {{-- Warna teks untuk aksi hapus --}} data-bs-toggle="modal"
+                                                        data-bs-target="#hapusStaff{{ $item->id }}">
+                                                        {{-- Target modal hapus --}}
+                                                        <i class="bi bi-trash me-2"></i> {{-- Ikon hapus --}}
+                                                        Hapus {{-- Teks hapus --}}
                                                     </button>
                                                 </li>
                                             </ul>
@@ -108,44 +121,36 @@
                                     </td>
                                 </tr>
 
-                                {{-- Modal Verifikasi Akun --}}
-                                <div class="modal fade" id="verifikasiMahasiswa{{ $item->id }}" tabindex="-1"
-                                    {{-- Ubah ID modal --}} aria-labelledby="verifikasiMahasiswaLabel{{ $item->id }}"
-                                    aria-hidden="true"> {{-- Ubah aria-labelledby --}}
+                                {{-- Modal Hapus Staff --}}
+                                <div class="modal fade" id="hapusStaff{{ $item->id }}" tabindex="-1"
+                                    {{-- ID modal hapus --}} aria-labelledby="hapusStaffLabel{{ $item->id }}"
+                                    aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="verifikasiMahasiswaLabel{{ $item->id }}">
-                                                    {{-- Ubah ID label dan teks judul --}}
-                                                    Konfirmasi Verifikasi Akun Mahasiswa</h5>
+                                                <h5 class="modal-title" id="hapusStaffLabel{{ $item->id }}">
+                                                    Konfirmasi Hapus Data {{ $title }} {{-- Judul modal hapus --}}
+                                                </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Apakah Anda yakin ingin memverifikasi akun untuk
-                                                <strong>{{ $item->users->name }}</strong> (NIM: {{ $item->nim }})?
-                                                {{-- Tambahkan informasi lain jika perlu, misal status saat ini --}}
-                                                <br><small>Status saat ini:
-                                                    @if ($item->users->status_akun == 'Aktif')
-                                                        <span class="badge bg-success">Aktif</span>
-                                                    @else
-                                                        <span class="badge bg-danger">Tidak Aktif</span>
-                                                    @endif
-                                                </small>
+                                                Apakah Anda yakin ingin menghapus data staff atas nama
+                                                <strong>{{ $item->users->name ?? 'Data tidak tersedia' }}</strong>
+                                                (NIP: {{ $item->nip ?? 'N/A' }})
+                                                ?
+                                                <br>
+                                                <strong class="text-danger">Data yang sudah dihapus tidak dapat
+                                                    dikembalikan!</strong>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                     Batal
                                                 </button>
-                                                {{-- Form untuk aksi verifikasi (lebih aman daripada link GET) --}}
-                                                <form action="{{ route('mahasiswa.status', ['mahasiswa' => $item->id]) }}"
-                                                    method="POST" style="display: inline;"> {{-- Sesuaikan route dan parameter. Mungkin ID user yang diverifikasi? --}}
-                                                    @csrf
-                                                    @method('PATCH') {{-- Atau POST/PUT, tergantung implementasi backend Anda --}}
-                                                    <button type="submit" class="btn btn-success"> {{-- Ubah kelas tombol dan teks --}}
-                                                        Ya, Verifikasi Akun
-                                                    </button>
-                                                </form>
+                                                <a href="{{ route('staff.destroy', ['staff' => $item->id]) }}"
+                                                    class="btn btn-danger"> {{-- Tombol konfirmasi hapus --}}
+                                                    Ya, Hapus Data
+                                                </a>
                                             </div>
                                         </div>
                                     </div>

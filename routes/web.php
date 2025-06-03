@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\FakultasController;
 use App\Http\Controllers\admin\JurusanController;
 use App\Http\Controllers\admin\MahasiswaController;
+use App\Http\Controllers\admin\StaffController;
 use App\Http\Controllers\auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,19 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/mahasiswa/{mahasiswa}/verify', [MahasiswaController::class, 'status'])->name('mahasiswa.status');
 
     Route::get('/mahasiswa/{mahasiswa}/destroy', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+
+    // Staff routes
+    Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
+
+    Route::get('/staff/tambah', [StaffController::class, 'create'])->name('staff.create');
+    Route::post('/staff/tambah', [StaffController::class, 'store'])->name('staff.store');
+
+    Route::get('/staff/{staff}/edit', [StaffController::class, 'edit'])->name('staff.edit');
+    Route::post('/staff/{staff}/update', [StaffController::class, 'update'])->name('staff.update');
+
+    Route::get('/staff/{staff}/detail', [StaffController::class, 'detail'])->name('staff.detail');
+
+    Route::get('/staff/{staff}/destroy', [StaffController::class, 'destroy'])->name('staff.destroy');
 
     // Logout routes
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

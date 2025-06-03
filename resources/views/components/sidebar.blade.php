@@ -57,13 +57,15 @@
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
-                        <a href="{{ route('mahasiswa.index') }}" class="{{ request()->is('mahasiswa*') ? 'active' : '' }}">
+                        <a href="{{ route('mahasiswa.index') }}"
+                            class="{{ request()->is('mahasiswa*') ? 'active' : '' }}">
                             <i class="fa fa-angle-right"></i>
                             Data Mahasiswa
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('mahasiswa.verifikasi') }}" class="{{ request()->is('mahasiswa/verifikasi*') ? 'active' : '' }}">
+                        <a href="{{ route('mahasiswa.verifikasi') }}"
+                            class="{{ request()->is('mahasiswa/verifikasi*') ? 'active' : '' }}">
                             <i class="fa fa-angle-right"></i>
                             Validasi Mahasiswa
                         </a>
@@ -71,17 +73,13 @@
                 </ul>
             @endif
 
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-write"></i><span>Form Builder</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="form-builder.html"><i class="fa fa-angle-right"></i>Form Builder 1</a></li>
-                <li><a href="form-builder-2.html"><i class="fa fa-angle-right"></i>Form Builder 2</a></li>
-            </ul>
-            <a href="button-builder.html" class="sidebar-header">
-                <i class="icon-bookmark-alt"></i> <span>Button Builder</span>
-            </a>
+            @if (Auth::user()->role == 'admin')
+                <a href="{{ route('staff.index') }}"
+                    class="sidebar-header {{ request()->is('staff*') ? 'active' : '' }}">
+                    <i class="icon-write"></i>
+                    <span>Data Staff</span>
+                </a>
+            @endif
         </li>
 
         <li>
