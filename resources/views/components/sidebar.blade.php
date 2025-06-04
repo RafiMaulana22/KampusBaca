@@ -88,35 +88,18 @@
                 <a href="{{ route('kategori.index') }}"
                     class="sidebar-header {{ request()->is('kategori*') ? 'active' : '' }}">
                     <i class="icon-package"></i>
-                    <span> Kategori</span>
+                    <span> Data Kategori</span>
                 </a>
             @endif
         </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-support"></i><span> Advance</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="scrollable.html"><i class="fa fa-angle-right"></i>Scrollable</a></li>
-                <li><a href="tree.html"><i class="fa fa-angle-right"></i>Tree view</a></li>
-                <li><a href="bootstrap-notify.html"><i class="fa fa-angle-right"></i>Bootstrap Notify</a></li>
-                <li><a href="rating.html"><i class="fa fa-angle-right"></i>Rating</a></li>
-                <li><a href="dropzone.html"><i class="fa fa-angle-right"></i>dropzone</a></li>
-                <li><a href="tour.html"><i class="fa fa-angle-right"></i>Tour</a></li>
-                <li><a href="sweet-alert.html"><i class="fa fa-angle-right"></i>SweetAlert2</a></li>
-                <li><a href="modal-animated.html"><i class="fa fa-angle-right"></i>Animated Modal</a></li>
-                <li><a href="owl-carousel.html"><i class="fa fa-angle-right"></i>Owl Carousel</a></li>
-                <li><a href="ribbons.html"><i class="fa fa-angle-right"></i>Ribbons</a></li>
-                <li><a href="pagination.html"><i class="fa fa-angle-right"></i>Pagination</a></li>
-                <li><a href="steps.html"><i class="fa fa-angle-right"></i>Steps</a></li>
-                <li><a href="breadcrumb.html"><i class="fa fa-angle-right"></i>Breadcrumb</a></li>
-                <li><a href="range-slider.html"><i class="fa fa-angle-right"></i>Range Slider</a></li>
-                <li><a href="image-cropper.html"><i class="fa fa-angle-right"></i>Image cropper</a></li>
-                <li><a href="sticky.html"><i class="fa fa-angle-right"></i>Sticky</a></li>
-
-            </ul>
-        </li>
+        @if (Auth::user()->role == 'admin')
+            <li>
+                <a href="{{ route('buku.index') }}" class="sidebar-header">
+                    <i class="icon-support"></i>
+                    <span> Data Buku</span>
+                </a>
+            </li>
+        @endif
         <li>
             <a href="javascript:void(0)" class="sidebar-header">
                 <i class="icon-infinite"></i> <span>Animation<span class="badge badge-danger ms-3">Hot</span></span>

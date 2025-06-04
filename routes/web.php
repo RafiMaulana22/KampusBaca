@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\BukuController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\FakultasController;
 use App\Http\Controllers\admin\JurusanController;
@@ -80,6 +81,19 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/kategori/{kategori}/update', [KategoriController::class, 'update'])->name('kategori.update');
 
     Route::get('/kategori/{kategori}/destroy', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+
+    // Buku routes
+    Route::get('/buku', [BukuController::class, 'index'])->name('buku.index');
+
+    Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
+    Route::post('/buku/create', [BukuController::class, 'store'])->name('buku.store');
+
+    Route::get('/buku/{buku}/edit', [BukuController::class, 'edit'])->name('buku.edit');
+    Route::post('/buku/{buku}/edit', [BukuController::class, 'update'])->name('buku.update');
+
+    Route::get('/buku/{buku}/detail', [BukuController::class, 'detail'])->name('buku.detail');
+
+    Route::get('/buku/{buku}/destroy', [BukuController::class, 'destroy'])->name('buku.destroy');
 
     // Logout routes
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
