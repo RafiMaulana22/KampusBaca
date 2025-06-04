@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\FakultasController;
 use App\Http\Controllers\admin\JurusanController;
+use App\Http\Controllers\admin\KategoriController;
 use App\Http\Controllers\admin\MahasiswaController;
 use App\Http\Controllers\admin\StaffController;
 use App\Http\Controllers\auth\AuthController;
@@ -70,6 +71,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/staff/{staff}/detail', [StaffController::class, 'detail'])->name('staff.detail');
 
     Route::get('/staff/{staff}/destroy', [StaffController::class, 'destroy'])->name('staff.destroy');
+
+    // Kategori routes
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
+
+    Route::get('/kategori/{kategori}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::post('/kategori/{kategori}/update', [KategoriController::class, 'update'])->name('kategori.update');
+
+    Route::get('/kategori/{kategori}/destroy', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 
     // Logout routes
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

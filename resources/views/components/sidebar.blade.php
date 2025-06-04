@@ -83,38 +83,14 @@
         </li>
 
         <li>
-            <div class="sidebar-title">Components</div>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-package"></i><span> Base</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="state-color.html"><i class="fa fa-angle-right"></i>State color</a></li>
-                <li><a href="typography.html"><i class="fa fa-angle-right"></i>Typography</a></li>
-                <li><a href="helper-classes.html"><i class="fa fa-angle-right"></i>helper classes</a></li>
-                <li><a href="grid.html"><i class="fa fa-angle-right"></i>Grid</a></li>
-                <li><a href="tag-pills.html"><i class="fa fa-angle-right"></i>Tag & pills</a></li>
-                <li><a href="progress-bar.html"><i class="fa fa-angle-right"></i>Progress</a></li>
-                <li><a href="modal.html"><i class="fa fa-angle-right"></i>Modal</a></li>
-
-                <li><a href="alert.html"><i class="fa fa-angle-right"></i>Alert</a></li>
-                <li><a href="popover.html"><i class="fa fa-angle-right"></i>Popover</a></li>
-                <li><a href="tooltip.html"><i class="fa fa-angle-right"></i>Tooltip</a></li>
-                <li><a href="loader.html"><i class="fa fa-angle-right"></i>Spinners</a></li>
-                <li><a href="dropdown.html"><i class="fa fa-angle-right"></i>Dropdown</a></li>
-                <li>
-                    <a href="javascript:void(0)"><i class="fa fa-angle-right"></i>Tabs<i
-                            class="fa fa-angle-down pull-right"></i></a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="tab-bootstrap.html"><i class="fa fa-angle-right"></i>Bootstrap Tabs</a></li>
-                        <li><a href="tab-material.html"><i class="fa fa-angle-right"></i>Line Tabs</a></li>
-                    </ul>
-                </li>
-                <li><a href="according.html"><i class="fa fa-angle-right"></i>According</a></li>
-                <li><a href="navs.html"><i class="fa fa-angle-right"></i>Navs</a></li>
-                <li><a href="box-shadow.html"><i class="fa fa-angle-right"></i>Shadow</a></li>
-                <li><a href="list.html"><i class="fa fa-angle-right"></i>Lists</a></li>
-            </ul>
+            <div class="sidebar-title">Manajemen Koleksi Buku</div>
+            @if (Auth::user()->role == 'admin')
+                <a href="{{ route('kategori.index') }}"
+                    class="sidebar-header {{ request()->is('kategori*') ? 'active' : '' }}">
+                    <i class="icon-package"></i>
+                    <span> Kategori</span>
+                </a>
+            @endif
         </li>
         <li>
             <a href="javascript:void(0)" class="sidebar-header">
