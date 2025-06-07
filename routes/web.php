@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\FakultasController;
 use App\Http\Controllers\admin\JurusanController;
 use App\Http\Controllers\admin\KategoriController;
 use App\Http\Controllers\admin\MahasiswaController;
+use App\Http\Controllers\admin\PeminjamanController;
 use App\Http\Controllers\admin\StaffController;
 use App\Http\Controllers\auth\AuthController;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/buku/{buku}/detail', [BukuController::class, 'detail'])->name('buku.detail');
 
     Route::get('/buku/{buku}/destroy', [BukuController::class, 'destroy'])->name('buku.destroy');
+
+    // Peminjaman routes
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
 
     // Logout routes
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

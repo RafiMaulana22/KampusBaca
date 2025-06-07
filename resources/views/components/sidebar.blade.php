@@ -8,7 +8,7 @@
     <ul class="sidebar-menu">
         <li class="active">
             <div class="sidebar-title">General</div>
-            <a href="{{ route('dashboard') }}" class="sidebar-header">
+            <a href="{{ route('dashboard') }}" class="sidebar-header {{ request()->is('dashboard*') ? 'active' : '' }}">
                 <i class="icon-desktop"></i>
                 <span>Dashboard</span>
             </a>
@@ -94,232 +94,24 @@
         </li>
         @if (Auth::user()->role == 'admin')
             <li>
-                <a href="{{ route('buku.index') }}" class="sidebar-header">
+                <a href="{{ route('buku.index') }}"
+                    class="sidebar-header {{ request()->is('buku*') ? 'active' : '' }}">
                     <i class="icon-support"></i>
                     <span> Data Buku</span>
                 </a>
             </li>
         @endif
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-infinite"></i> <span>Animation<span class="badge badge-danger ms-3">Hot</span></span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="animate.html"><i class="fa fa-angle-right"></i>Animate</a></li>
-                <li><a href="scroll-reval.html"><i class="fa fa-angle-right"></i>Scroll Reveal</a></li>
-                <li><a href="AOS.html"><i class="fa fa-angle-right"></i>AOS animation</a></li>
-                <li><a href="tilt.html"><i class="fa fa-angle-right"></i>Tilt Animation</a></li>
-                <li><a href="wow.html"><i class="fa fa-angle-right"></i>Wow Animation</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-crown"></i> <span>Icons</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="flag-icon.html"><i class="fa fa-angle-right"></i>Flag icon</a></li>
-                <li><a href="font-awesome.html"><i class="fa fa-angle-right"></i>Fontawesome Icon</a></li>
-                <li><a href="ico-icon.html"><i class="fa fa-angle-right"></i>Ico Icon</a></li>
-                <li><a href="themify-icon.html"><i class="fa fa-angle-right"></i>Thimify Icon</a></li>
-                <li><a href="whether-icon.html"><i class="fa fa-angle-right"></i>Whether Icon</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-cloud"></i> <span>Buttons</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="buttons.html"><i class="fa fa-angle-right"></i>Default Style</a></li>
-                <li><a href="flat-buttons.html"><i class="fa fa-angle-right"></i>Flat Style </a></li>
-                <li><a href="edge-buttons.html"><i class="fa fa-angle-right"></i>Edge Style </a></li>
-                <li><a href="raised-button.html"><i class="fa fa-angle-right"></i>Raised Style</a></li>
-                <li><a href="button-group.html"><i class="fa fa-angle-right"></i>Button Group</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-notepad"></i> <span>Forms</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li>
-                    <a href="javascript:void(0)"><i class="fa fa-angle-right"></i>Form Controls<i
-                            class="fa fa-angle-down pull-right"></i></a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="form-validation.html"><i class="fa fa-angle-right"></i>Form Validation</a></li>
-                        <li><a href="base-input.html"><i class="fa fa-angle-right"></i>Base Inputs</a></li>
-                        <li><a href="radio-checkbox-control.html"><i class="fa fa-angle-right"></i>Checkbox &
-                                Radio</a></li>
-                        <li><a href="input-group.html"><i class="fa fa-angle-right"></i>Input Groups</a></li>
-                        <li><a href="megaoptions.html"><i class="fa fa-angle-right"></i>Mega Options</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:void(0)"><i class="fa fa-angle-right"></i>Form Widgets<i
-                            class="fa fa-angle-down pull-right"></i></a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="datepicker.html"><i class="fa fa-angle-right"></i>Datepicker</a></li>
-                        <li><a href="time-picker.html"><i class="fa fa-angle-right"></i>Timepicker</a></li>
-                        <li><a href="datetimepicker.html"><i class="fa fa-angle-right"></i>Datetimepicker </a></li>
-                        <li><a href="daterangepicker.html"><i class="fa fa-angle-right"></i>Daterangepicker </a></li>
-                        <li><a href="touchspin.html"><i class="fa fa-angle-right"></i>Touchspin</a></li>
-                        <li><a href="select2.html"><i class="fa fa-angle-right"></i>Select2</a></li>
-                        <li><a href="switch.html"><i class="fa fa-angle-right"></i>Switch</a></li>
-                        <li><a href="typeahead.html"><i class="fa fa-angle-right"></i>Typeahead</a></li>
-                        <li><a href="clipboard.html"><i class="fa fa-angle-right"></i>Clipboard</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:void(0)"><i class="fa fa-angle-right"></i>Form Layout<i
-                            class="fa fa-angle-down pull-right"></i></a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="default-form.html"><i class="fa fa-angle-right"></i>Default Forms</a></li>
-                        <li><a href="form-wizard.html"><i class="fa fa-angle-right"></i>Form Wizard 1</a></li>
-                        <li><a href="form-wizard-two.html"><i class="fa fa-angle-right"></i>Form Wizard 2</a></li>
-                        <li><a href="form-wizard-three.html"><i class="fa fa-angle-right"></i>Form Wizard 3</a></li>
-                        <li><a href="form-wizard-four.html"><i class="fa fa-angle-right"></i>Form Wizard 4</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-harddrives"></i> <span>Tables</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li>
-                    <a href="javascript:void(0)"><i class="fa fa-angle-right"></i>Bootstrap Tables<i
-                            class="fa fa-angle-down pull-right"></i></a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="bootstrap-basic-table.html"><i class="fa fa-angle-right"></i>Basic Tables</a>
-                        </li>
-                        <li><a href="bootstrap-sizing-table.html"><i class="fa fa-angle-right"></i>Sizing Tables</a>
-                        </li>
-                        <li><a href="bootstrap-border-table.html"><i class="fa fa-angle-right"></i>Border Tables</a>
-                        </li>
-                        <li><a href="bootstrap-styling-table.html"><i class="fa fa-angle-right"></i>Styling Tables</a>
-                        </li>
-                        <li><a href="table-components.html"><i class="fa fa-angle-right"></i>Table components</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:void(0)"><i class="fa fa-angle-right"></i>Data Tables<i
-                            class="fa fa-angle-down pull-right"></i></a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="datatable-basic-init.html"><i class="fa fa-angle-right"></i>Basic Init</a></li>
-                        <li><a href="datatable-advance.html"><i class="fa fa-angle-right"></i>Advance Init</a></li>
-                        <li><a href="datatable-styling.html"><i class="fa fa-angle-right"></i>Styling</a></li>
-                        <li><a href="datatable-AJAX.html"><i class="fa fa-angle-right"></i>AJAX</a></li>
-                        <li><a href="datatable-server-side.html"><i class="fa fa-angle-right"></i>Server Side</a></li>
-                        <li><a href="datatable-plugin.html"><i class="fa fa-angle-right"></i>Plug-in</a></li>
-                        <li><a href="datatable-API.html"><i class="fa fa-angle-right"></i>API</a></li>
-                        <li><a href="datatable-data-source.html"><i class="fa fa-angle-right"></i>Data Sources</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:void(0)"><i class="fa fa-angle-right"></i>Extension Data Tables<i
-                            class="fa fa-angle-down pull-right"></i></a>
-                    <ul class="sidebar-submenu">
-                        <li><a href="datatable-ext-autofill.html"><i class="fa fa-angle-right"></i>Auto Fill</a></li>
-                        <li><a href="datatable-ext-basic-button.html"><i class="fa fa-angle-right"></i>Basic
-                                Button</a></li>
-                        <li><a href="datatable-ext-col-reorder.html"><i class="fa fa-angle-right"></i>Column
-                                Reorder</a></li>
-                        <li><a href="datatable-ext-fixed-header.html"><i class="fa fa-angle-right"></i>Fixed
-                                Header</a></li>
-                        <li><a href="datatable-ext-html-5-data-export.html"><i class="fa fa-angle-right"></i>HTML 5
-                                Export</a></li>
-                        <li><a href="datatable-ext-key-table.html"><i class="fa fa-angle-right"></i>Key Table</a></li>
-                        <li><a href="datatable-ext-responsive.html"><i class="fa fa-angle-right"></i>Responsive</a>
-                        </li>
-                        <li><a href="datatable-ext-row-reorder.html"><i class="fa fa-angle-right"></i>Row Reorder</a>
-                        </li>
-                        <li><a href="datatable-ext-scroller.html"><i class="fa fa-angle-right"></i>Scroller</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="jsgrid-table.html"><i class="fa fa-angle-right"></i>Js Grid Table</a>
-                </li>
-            </ul>
-        </li>
+        @if (Auth::user()->role == 'admin')
+            <li>
+                <div class="sidebar-title">Kontrol Sirkulasi</div>
+                <a href="{{ route('peminjaman.index') }}"
+                    class="sidebar-header {{ request()->is('peminjaman*') ? 'active' : '' }}">
+                    <i class="icon-user"></i>
+                    <span>Peminjaman</span>
+                </a>
+            </li>
+        @endif
 
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-credit-card"></i> <span>Cards</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="basic-card.html"><i class="fa fa-angle-right"></i>Basic Card</a></li>
-                <li><a href="creative-card.html"><i class="fa fa-angle-right"></i>Creative Card </a></li>
-                <li><a href="tabbed-card.html"><i class="fa fa-angle-right"></i>Tabbed Card</a></li>
-                <li><a href="dragable-card.html"><i class="fa fa-angle-right"></i>Draggable Card</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-panel"></i> <span>Timeline</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="timeline-v-1.html"><i class="fa fa-angle-right"></i>Timeline 1</a></li>
-                <li><a href="timeline-v-2.html"><i class="fa fa-angle-right"></i>Timeline 2</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-bar-chart"></i> <span>Charts</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="chart-google.html"><i class="fa fa-angle-right"></i>Google Chart</a></li>
-                <li><a href="chart-sparkline.html"><i class="fa fa-angle-right"></i>sparkline chart</a></li>
-                <li><a href="chart-flot.html"><i class="fa fa-angle-right"></i>Flot Chart</a></li>
-                <li><a href="chart-knob.html"><i class="fa fa-angle-right"></i>Knob Chart</a></li>
-                <li><a href="chart-morris.html"><i class="fa fa-angle-right"></i>Morris Chart</a></li>
-                <li><a href="chartjs.html"><i class="fa fa-angle-right"></i>chatjs Chart</a></li>
-                <li><a href="chartist.html"><i class="fa fa-angle-right"></i>chartist Chart</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-map-alt"></i> <span>Maps</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="map-js.html"><i class="fa fa-angle-right"></i>Map js</a></li>
-                <li><a href="vector-map.html"><i class="fa fa-angle-right"></i>Vector Maps</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-ruler-pencil"></i> <span>Editors</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="summernote.html"><i class="fa fa-angle-right"></i>Summer Note</a></li>
-                <li><a href="ckeditor.html"><i class="fa fa-angle-right"></i>CK editor</a></li>
-                <li><a href="simple-MDE.html"><i class="fa fa-angle-right"></i>MDE editor</a></li>
-
-                <li><a href="ace-code-editor.html"><i class="fa fa-angle-right"></i>ACE code editor</a></li>
-            </ul>
-        </li>
-        <li>
-            <div class="sidebar-title">Apps</div>
-            <a href="javascript:void(0)" class="sidebar-header">
-                <i class="icon-user"></i><span>Users</span>
-                <i class="fa fa-angle-right pull-right"></i>
-            </a>
-            <ul class="sidebar-submenu">
-                <li><a href="user-profile.html"><i class="fa fa-angle-right"></i>Users Profile</a></li>
-                <li><a href="edit-profile.html"><i class="fa fa-angle-right"></i>Users Edit</a></li>
-                <li><a href="user-cards.html"><i class="fa fa-angle-right"></i>Users Cards</a></li>
-            </ul>
-        </li>
         <li>
             <a href="javascript:void(0)" class="sidebar-header">
                 <i class="icon-calendar"></i> <span>Calender</span>
